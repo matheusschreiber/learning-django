@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAEAE</title>
+</head>
+
+<body>
+
+  <h1>Title of the external website</h1>
+
+  <ul id="rooms-container"></ul>
+
+</body>
+
+<script>
+
+  let getRooms = async () => {
+    let response = await fetch('http://127.0.0.1:8000/api/rooms/')
+    let rooms = await response.json()
+
+    console.log(rooms)
+    rooms.map((room) => {
+      const node = document.createElement("li");
+      const textnode = document.createTextNode(room.name);
+      node.appendChild(textnode);
+      document.getElementById('rooms-container').appendChild(node)
+
+    })
+  }
+
+  getRooms()
+
+</script>
+
+</html>
