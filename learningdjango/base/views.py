@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import Room, Topic, Message
-from .forms import RoomForm, UserForm
-from django.contrib.auth.models import User
+from .models import Room, Topic, Message, User
+from .forms import RoomForm, UserForm, MyUserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.models import User
+# from django.contrib.auth.forms import UserCreationForm
 
 from django.http import HttpResponse
 
@@ -47,10 +47,10 @@ def logoutUser(request):
   return redirect('home')
 
 def registerPage(request):
-  form = UserCreationForm()
+  form = MyUserCreationForm()
 
   if request.method == 'POST':
-    form = UserCreationForm(request.POST)
+    form = MyUserCreationForm(request.POST)
     if form.is_valid():
       user = form.save(commit=False)
       user.username = user.username.lower()
@@ -129,7 +129,7 @@ def updateUser(request):
   form = UserForm(instance=request.user)
   
   if request.method == "POST":
-    form = UserForm(request.POST, instance=request.user)
+    form = UserForm(request.POST, request.FILES, instance=request.user)
     if form.is_valid():
       form.save()
       return redirect('user-profile', pk=request.user.id)
