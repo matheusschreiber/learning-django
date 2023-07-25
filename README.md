@@ -15,4 +15,10 @@ pip3 install django
 
 ```
 
+## Running
+
+```
+python3 manage.py runserver
+```
+
 > More info [https://www.djangoproject.com/](https://www.djangoproject.com/)
